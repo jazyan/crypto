@@ -11,7 +11,7 @@ def affine (message, a, b):
     ans = [f(c) for c in message]
     return ''.join(ans).upper()
 
-def vignere (message, key):
+def vigenere (message, key):
     shift = lambda x, y: chr((ord(x) - 97 + y) % 26 + 97)
     k = [ord(c) - 97 for c in key]
     ans = [shift(message[i], k[i%len(k)]) for i in range(len(message))]
@@ -25,6 +25,6 @@ elif choice.lower() == "affine":
     a, b = map(int, raw_input("a and b? (1-25): ").split())
     print affine(message, a, b)
 
-elif choice.lower() == "vignere":
+elif choice.lower() == "vigenere":
     key = raw_input("Key? ")
-    print vignere(message, key)
+    print vigenere(message, key)
