@@ -5,7 +5,7 @@ check = raw_input("Input your message: ").lower()
 d = list(set(re.findall(r"[\w']+", open('dictionary.txt', 'r').read().lower())))
 
 d = [word for word in d if len(word) > 1]
-d + ["a", "i"]
+d += ["a", "i"]
 
 def wordrec (message):
     if message in d:
@@ -17,7 +17,12 @@ def wordrec (message):
         for i in range(j):
             if table[i] and message[i:j] in d:
                 print i, j, message[i:j]
-                words[j].append(words[i] + [message[i:j]])
+                if words[i] == []:
+                    words[j].append(message[i:j])
+                else:
+                    for word in words[i]:
+                        words[j].append(word + " " + message[i:j])
+                #words[j].append(words[i] + [message[i:j]])
         if words[j] != []:
             table[j] = 1
         #words[j] = list(set(words[j] + words[j-1]))
