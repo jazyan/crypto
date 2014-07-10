@@ -6,18 +6,20 @@ check = raw_input("Input your message: ").lower()
 
 # take out punctuation and repeated words, and convert to list
 d = re.findall(r"[\w]+", open('big.txt', 'r').read().lower())
+# only keep common short words
 short = ["i", "a", "ab", "ad", "am", "an", "as", "at", "ax", "be", "by",
          "do", "ex", "go", "he", "hi", "id", "if", "in", "is", "it",
          "ma", "me", "my", "no", "of", "oh", "ok", "on", "op", "or",
          "ow", "ox", "pa", "pi", "qi", "so", "up", "us", "we", "yo"]
 d = [w for w in d if len(w) > 2 or w in short]
-d += ["a", "i"]
+
+# count the frequency of each word
 for word in d:
     ctr[word] += 1
-
 d = dict(ctr)
 
-def wordrec (message):
+# dynamic programming to find words in message
+def findwords (message):
     if message in d:
         return message
     table = [0 for i in range(len(message)+1)]
@@ -35,11 +37,19 @@ def wordrec (message):
             table[j] = 1
     return words[-1]
 
+# choose the message with the greatest sum of word frequency
 def score (m):
     words = re.sub("[^\w]", " ", m).split()
     freq = [d[word] for word in words]
     ans = sum(freq)
 
-scores = {x : score(x) for x in wordrec(check)}
-message = min(scores, key=scores.get)
-print message
+def run (results):
+    if results != []:
+        if type(results) == str:
+            return results
+        scores = {x : score(x) for x in results}
+        return max(scores, key=scores.get)
+    else:
+        return "No words recognized"
+
+print run(findwords(check))
