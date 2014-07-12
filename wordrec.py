@@ -1,8 +1,14 @@
 import re
+import sys
 from collections import Counter
 
+# read lines to decode from arg1, store the ans in arg2
+fin = open(sys.argv[1], 'r')
+fout = open(sys.argv[2], 'w')
+words = fin.readlines()
+words = [s.strip("\n") for s in words]
+
 ctr = Counter()
-check = raw_input("Input your message: ").lower()
 
 # take out punctuation and repeated words, and convert to list
 d = re.findall(r"[\w]+", open('big.txt', 'r').read().lower())
@@ -52,4 +58,5 @@ def run (results):
     else:
         return "No words recognized"
 
-print run(findwords(check))
+for i in range(len(words)):
+    fout.write(str(i) + ": " + run(findwords(words[i])) + "\n")
