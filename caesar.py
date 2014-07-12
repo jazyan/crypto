@@ -1,4 +1,5 @@
-f = open('test.txt', 'w')
+import sys
+f = open(sys.argv[1], 'w')
 code = raw_input("To decrypt: ").lower()
 
 def caesar (message, shift):
